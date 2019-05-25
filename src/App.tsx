@@ -1,26 +1,34 @@
 import React from 'react';
-import logo from './logo.svg';
+import UptimeForm from './UptimeForm';
 import './App.css';
 
-const App: React.FC = () => {
+const App: React.FC<{ sla?: number }> = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
+      <h1>
+        <b>UP71ME &amp; SLA CALC:</b>
+      </h1>
+      <UptimeForm></UptimeForm>
+      <div className="App-bottom">
+          rtfm: <a
+            className="App-link"
+            href="https://en.wikipedia.org/wiki/Uptime"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            uptime
+        </a> and <a
+            className="App-link"
+            href="https://en.wikipedia.org/wiki/Leet"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            leetspeak
         </a>
-      </header>
-    </div>
-  );
-}
-
-export default App;
+        <p>Created by Ted Johnson messing around.</p>
+        </div>
+      </div>
+      );
+    }
+    
+    export default App;
