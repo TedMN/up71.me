@@ -1,0 +1,152 @@
+import React, { FormEvent } from 'react';
+import Moment from 'moment';
+import { InputGroup, Form, FormControl, Alert, Dropdown, DropdownButton } from 'react-bootstrap';
+import Results from './Results';
+import { thisTypeAnnotation } from '@babel/types';
+
+export const MILLISECONDS_IN_A_DAY = 86400 * 1000;
+export const MILLISECONDS_IN_A_YEAR = 365 * MILLISECONDS_IN_A_DAY;
+export const MILLISECONDS_IN_A_LEAPYEAR = 366 * MILLISECONDS_IN_A_DAY;
+export const MILLISECONDS_IN_A_MONTH = 30 * MILLISECONDS_IN_A_DAY;
+
+//Warning conditional display
+function Warning(warning: string) {
+  return warning ? (<Alert variant="danger">{warning}</Alert>) : ("");
+}
+
+/**
+ * React component to render the form and output for outage calculations
+ */
+export default class UptimeForm extends React.Component<any, any, any> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      day: '',
+      week: '',
+      month: '',
+      year: '',
+      leapYear: '',
+      raw: '',
+      warning: '',
+      placeholder: 'Duration, ex: PT4H (4 hours)',
+      selected: 'Duration ISO',
+      other: 'Hours',
+      durationModes: {
+        'Hours': { placeholder: 'Hours, ex: 1.5', warning: 'Must enter only a number, like 1.5 or 34.' },
+        'Duration ISO': { placeholder: 'Duration, ex: PT4H (4 hours)', warning: 'Must enter a Duration per the ISO 8601 specifcation, PT4H or P2DT4H4M.' }
+      }
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.createHandleChangeButton = this.createHandleChangeButton.bind(this);
+  }
+
+  //Will set the state back to where it started.
+  clearRanges(): void {
+    this.setState({
+      day: '',
+      week: '',
+      month: '',
+      year: '',
+      leapYear: ''
+    });
+  }
+
+  //Can handle multiple types, simply prevents default event bubbling from occuring further.
+  preventEvent(event: FormEvent<HTMLFormElement> | Event) {
+    event.preventDefault();
+  }
+
+  //Called whenever a change on the input requires handling and potentially updating the state.
+  handleChange(event: any) {
+    const value = event.target.value;
+    
+    this.setState({ raw: value });
+
+    this.preventEvent(event);
+    
+    return this.state.selected === 'Hours' ? this.handleHoursChange(value) : this.handleDurationChange(value);
+  }
+
+  //Creates a function with a bound value so that it can be easily invoked.  The Button Dropdown is not saving the context very well.
+  createHandleChangeButton(value : string) : () => void {
+    const newOther = this.state.selected;
+    const otherObj = this.state.durationModes[value];
+    const placeholder = otherObj.placeholder;
+    
+    return () => {
+      this.clearRanges();
+      this.setState({
+        raw: "",
+        other: newOther,
+        placeholder: placeholder,
+        selected: value,
+        warning: ""
+      });
+    };
+  }
+
+  handleHoursChange(value : string) {
+    value = "PT" + value + "H";
+    this.handleDurationChange(value);
+  }
+
+  handleDurationChange(value : string) {
+    const duration = Moment.duration(value);
+    const isValid = duration.isValid() && duration.asMilliseconds() > 0;
+    
+    console.log(duration.toISOString())
+    if (value.length < 3) {
+      this.setState({ warning: "" });
+      this.clearRanges();
+    } else if (!isValid) {
+      this.setState({ warning: this.state.durationModes[this.state.selected].warning });
+      this.clearRanges();
+    } else {
+      //is a valid change and update required
+      this.setOutage(duration.asMilliseconds());
+      this.setState({ warning: "" });
+    }
+  }
+
+  //sets the state data for a given downtime ratio provided in the input param
+  setOutage(ms: number): void {
+    const convert = (num: number) => (100-(100*num)).toFixed(4) + "%";
+
+    let newValues = {
+      day: convert(ms/MILLISECONDS_IN_A_DAY),
+      week: convert(ms/(MILLISECONDS_IN_A_DAY * 7)),
+      month: convert(ms/MILLISECONDS_IN_A_MONTH),
+      year: convert(ms/MILLISECONDS_IN_A_YEAR),
+      leapYear: convert(ms/MILLISECONDS_IN_A_LEAPYEAR)
+    };
+
+    this.setState(newValues);
+  }
+
+  public render() {
+    return (
+      <Form onSubmit={this.preventEvent} >
+        <InputGroup size="lg" className="mb-1">
+          <FormControl
+            placeholder={this.state.placeholder}
+            aria-label={this.state.placeholder}
+            aria-describedby="basic-addon2"
+            className="UptimeInput" style={{ paddingRight: '2rem' }} name="uptime" autoComplete={"off"} autoFocus={true} onChange={this.handleChange}
+            isInvalid={this.state.warning}
+            value={this.state.raw}
+          />
+          <DropdownButton
+            as={InputGroup.Append}
+            variant="outline-secondary"
+            title={this.state.selected}
+            id="input-group-dropdown-2">
+            <Dropdown.Item key={this.state.other} href="#" onSelect={this.createHandleChangeButton(this.state.other)}>{this.state.other}</Dropdown.Item>
+          </DropdownButton>
+        </InputGroup>
+        {Warning(this.state.warning)}
+        <Results state={this.state} title="Matching SLA %"/>
+      </Form>
+    );
+  }
+}
