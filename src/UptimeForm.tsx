@@ -57,6 +57,7 @@ export default class UptimeForm extends React.Component<any, any, any> {
     constructor(props : any) {
       super(props);
       this.state = {
+        cursorFocus: true,
         day: '',
         week: '',
         month: '',
@@ -132,10 +133,10 @@ export default class UptimeForm extends React.Component<any, any, any> {
         <Form onSubmit={this.preventEvent} >
               <InputGroup className="mb-1" size="lg">
               <FormControl
-                placeholder="Service level percentage (ex: 99.95)"
-                aria-label="Service level percentage"
+                placeholder="SLA percent (ex: 99.95)"
+                aria-label="SLA percent"
                 aria-describedby="basic-addon2"
-                className="UptimeInput" style={{paddingRight: '2rem'}} name="uptime" autoComplete={"off"} autoFocus={true} onChange={this.handleChange}
+                className="UptimeInput" style={{paddingRight: '2rem'}} name="uptime" autoComplete={"off"} autoFocus={this.state.cursorFocus} onChange={this.handleChange}
                 isInvalid={this.state.warning}
               />
               <InputGroup.Append>
@@ -143,7 +144,7 @@ export default class UptimeForm extends React.Component<any, any, any> {
               </InputGroup.Append>
             </InputGroup>
             {Warning(this.state.warning)}
-            <Results state={this.state} title="Downtime Breach"/>
+            <Results state={this.state} title="Downtime"/>
         </Form>
       );
     }

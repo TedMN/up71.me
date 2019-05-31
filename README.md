@@ -1,4 +1,8 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#UP71.ME (uptime)
+
+This is the source code for up71.me a website that provides simple, easy to use, clear SLA calculations.  While not particulary interesting or advanced it does provide a test bed for learning and trying things out.  This project leverages React, Typescript, Create React App, moment.js, and react-bootstrap.  Moment.js is very very good and provided the key conversions to and from durations.  I have used moment.js for many projects and highly recommend it.
+
+## Below are the default Creat React App 
 
 ## Available Scripts
 

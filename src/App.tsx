@@ -34,7 +34,7 @@ const App: React.FC<{ sla?: number }> = () => {
             <br/>
             <Card>
               <Card.Body>
-                <Card.Text>For those with questions about uptime, ISO 8601, or leek speak please R.T.F.M. in the links below.</Card.Text>
+                <Card.Text>For those with questions about uptime, ISO 8601, or leet speak please R.T.F.M. in the links below.</Card.Text>
                 <Card.Link className="App-link"
                 href="https://en.wikipedia.org/wiki/Uptime"
                 target="_blank"

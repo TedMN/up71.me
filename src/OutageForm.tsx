@@ -20,7 +20,18 @@ function Warning(warning: string) {
 export default class UptimeForm extends React.Component<any, any, any> {
   constructor(props: any) {
     super(props);
+    
+    //This feels like it could be better handled with two subclasses/conditional rendering of two small objects. May refactor when we go multi-lingual.
+    const durationModes = {
+      'Hours': { placeholder: 'Hours, ex: 1.5', warning: 'Must enter only a number, like 1.5 or 34.' },
+      'Duration': { placeholder: 'ISO 8601 ex: PT1.5H', warning: 'Must enter a Duration per the ISO 8601 specifcation, PT4H or P2DT4H4M.' }
+    };
+
+    const selected = 'Hours';
+    const other = 'Duration';
+
     this.state = {
+      cursorFocus: false,
       day: '',
       week: '',
       month: '',
@@ -28,13 +39,10 @@ export default class UptimeForm extends React.Component<any, any, any> {
       leapYear: '',
       raw: '',
       warning: '',
-      placeholder: 'Duration, ex: PT4H (4 hours)',
-      selected: 'Duration ISO',
-      other: 'Hours',
-      durationModes: {
-        'Hours': { placeholder: 'Hours, ex: 1.5', warning: 'Must enter only a number, like 1.5 or 34.' },
-        'Duration ISO': { placeholder: 'Duration, ex: PT4H (4 hours)', warning: 'Must enter a Duration per the ISO 8601 specifcation, PT4H or P2DT4H4M.' }
-      }
+      placeholder: durationModes[selected].placeholder,
+      selected: selected,
+      other: other,
+      durationModes: durationModes
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -111,7 +119,10 @@ export default class UptimeForm extends React.Component<any, any, any> {
 
   //sets the state data for a given downtime ratio provided in the input param
   setOutage(ms: number): void {
-    const convert = (num: number) => (100-(100*num)).toFixed(4) + "%";
+    const convert = (num: number) => {
+      const converted = (100-(100*num));
+      return (converted > 0 ? converted.toFixed(4) : 0) + "%";
+    }
 
     let newValues = {
       day: convert(ms/MILLISECONDS_IN_A_DAY),
@@ -132,7 +143,7 @@ export default class UptimeForm extends React.Component<any, any, any> {
             placeholder={this.state.placeholder}
             aria-label={this.state.placeholder}
             aria-describedby="basic-addon2"
-            className="UptimeInput" style={{ paddingRight: '2rem' }} name="uptime" autoComplete={"off"} autoFocus={true} onChange={this.handleChange}
+            className="UptimeInput" style={{ paddingRight: '2rem' }} name="uptime" autoComplete={"off"} autoFocus={this.state.cursorFocus} onChange={this.handleChange}
             isInvalid={this.state.warning}
             value={this.state.raw}
           />
