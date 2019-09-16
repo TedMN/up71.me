@@ -2,7 +2,6 @@ import React, { FormEvent } from 'react';
 import Moment from 'moment';
 import { InputGroup, Form, FormControl, Alert, Dropdown, DropdownButton } from 'react-bootstrap';
 import Results from './Results';
-import { thisTypeAnnotation } from '@babel/types';
 
 export const MILLISECONDS_IN_A_DAY = 86400 * 1000;
 export const MILLISECONDS_IN_A_YEAR = 365 * MILLISECONDS_IN_A_DAY;

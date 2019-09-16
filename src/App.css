@@ -45,3 +45,14 @@ input.UptimeInput {
   padding-right: 2rem;
   padding: 0.5rem, 2rem;
 }
+
+/* solve for that little spinner on number inputs, don't want it */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
+}
