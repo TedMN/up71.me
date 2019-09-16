@@ -19,10 +19,10 @@ const App: React.FC<{ sla?: number }> = () => {
           </Col>
           
           <Col lg="12" md="12" xl="3" className="App-notes">
-            <h1><b>UP71.ME</b></h1>
+            <h2><b>UP71.ME (uptime)</b></h2>
             <Card>
               <Card.Body>
-                UP71.ME is a simple site for uptime, SLA, and downtime calcuations.  It's goal is to be fast, usable, and clear.<br/>
+                UP71.ME (uptime) is a simple site for uptime, SLA, and downtime calcuations.  It's goal is to be fast, usable, and clear.<br/>
               Created by <a
                 className="App-link"
                 href="https://www.linkedin.com/in/johnsontedm"
@@ -51,6 +51,14 @@ const App: React.FC<{ sla?: number }> = () => {
                 href="https://en.wikipedia.org/wiki/ISO_8601"
                 target="_blank"
                 rel="noopener noreferrer">ISO 8601</Card.Link>
+                <Card.Text><br/><b>-OR-</b><br/></Card.Text>
+                <Card.Link className="App-link" href="https://github.com/TedMN/up71.me" target="_blank">
+                  <img alt="Github project link" src="GitHub-Mark-32px.png"/> UP71.ME project
+                </Card.Link>
+                <br/><br/>
+                <Card.Link className="App-link" href="https://twitter.com/intent/tweet?url=https://up71.me/&text=@TedMN Feedback or suggestion&hashtags=sla,up71.me,uptime" target="_blank">
+                  <img alt="Twitter" src="Twitter_Social_Icon_Circle_Color.svg" width="32px" height="32px"/> Feedback or mention
+                </Card.Link>
               </Card.Body>
             </Card>
           </Col>
