@@ -39,6 +39,9 @@ h1 {
 .App-result {
   padding: 15px;
 }
+.Center-Text {
+  text-align: center;
+}
 
 input.UptimeInput {
   text-align:right;

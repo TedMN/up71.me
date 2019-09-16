@@ -51,7 +51,7 @@ const App: React.FC<{ sla?: number }> = () => {
                 href="https://en.wikipedia.org/wiki/ISO_8601"
                 target="_blank"
                 rel="noopener noreferrer">ISO 8601</Card.Link>
-                <Card.Text><br/><b>-OR-</b><br/></Card.Text>
+                <Card.Text className="Center-Text"><br/><b>-OR-</b><br/></Card.Text>
                 <Card.Link className="App-link" href="https://github.com/TedMN/up71.me" target="_blank">
                   <img alt="Github project link" src="GitHub-Mark-32px.png"/> UP71.ME project
                 </Card.Link>
