@@ -47,10 +47,6 @@ export default class UptimeForm extends React.Component<any, any, any> {
       event.preventDefault();
     }
 
-    handleInvalid(event : any) {
-      this.setState({warning: "A percent for uptime needs to from 0 to 100. ex: 99.95"});
-    }
-
     //Called whenever a change on the input requires handling and potentially updating the state.
     handleChange(event : any) {
       const value = event.target.value;
@@ -58,6 +54,7 @@ export default class UptimeForm extends React.Component<any, any, any> {
       const message = "A percent for uptime needs to from 0 to 100. ex: 99.95";
 
       this.preventEvent(event);
+
       if(!isValid) {
         this.setState({warning: message});
         this.clearDowntimes();
@@ -110,7 +107,7 @@ export default class UptimeForm extends React.Component<any, any, any> {
                 className="UptimeInput" style={{paddingRight: '2rem'}} 
                 name="uptime" autoComplete={"off"} 
                 autoFocus={this.state.cursorFocus} 
-                onChange={this.handleChange}
+                onInput={this.handleChange}
                 isInvalid={this.state.warning}
               />
               <InputGroup.Append>
