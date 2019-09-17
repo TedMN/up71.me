@@ -2,19 +2,12 @@ import React, { FormEvent } from 'react';
 import Moment from 'moment';
 import { InputGroup, Form, FormControl, Alert, Dropdown, DropdownButton } from 'react-bootstrap';
 import Results from './Results';
-
-export const MILLISECONDS_IN_A_DAY = 86400 * 1000;
-export const MILLISECONDS_IN_A_YEAR = 365 * MILLISECONDS_IN_A_DAY;
-export const MILLISECONDS_IN_A_LEAPYEAR = 366 * MILLISECONDS_IN_A_DAY;
-export const MILLISECONDS_IN_A_MONTH = 30 * MILLISECONDS_IN_A_DAY;
-
-//Warning conditional display
-function Warning(warning: string) {
-  return warning ? (<Alert variant="danger">{warning}</Alert>) : ("");
-}
+import * as uptimeCalc from './uptimeCalc';
+import Warning from './Warning';
 
 /**
  * React component to render the form and output for outage calculations
+ * Input hours or duration and get back SLA %, ex. 99.945
  */
 export default class UptimeForm extends React.Component<any, any, any> {
   constructor(props: any) {
@@ -94,7 +87,10 @@ export default class UptimeForm extends React.Component<any, any, any> {
   }
 
   handleHoursChange(value : string) {
-    value = "PT" + value + "H";
+    if(value !== ""){
+      value = "PT" + value + "H";
+    }
+    
     this.handleDurationChange(value);
   }
 
@@ -124,11 +120,11 @@ export default class UptimeForm extends React.Component<any, any, any> {
     }
 
     let newValues = {
-      day: convert(ms/MILLISECONDS_IN_A_DAY),
-      week: convert(ms/(MILLISECONDS_IN_A_DAY * 7)),
-      month: convert(ms/MILLISECONDS_IN_A_MONTH),
-      year: convert(ms/MILLISECONDS_IN_A_YEAR),
-      leapYear: convert(ms/MILLISECONDS_IN_A_LEAPYEAR)
+      day: convert(ms/uptimeCalc.MILLISECONDS_IN_A_DAY),
+      week: convert(ms/(uptimeCalc.MILLISECONDS_IN_A_DAY * 7)),
+      month: convert(ms/uptimeCalc.MILLISECONDS_IN_A_MONTH),
+      year: convert(ms/uptimeCalc.MILLISECONDS_IN_A_YEAR),
+      leapYear: convert(ms/uptimeCalc.MILLISECONDS_IN_A_LEAPYEAR)
     };
 
     this.setState(newValues);

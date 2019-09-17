@@ -2,17 +2,14 @@ import React, { FormEvent } from 'react';
 import { InputGroup, Form, FormControl, Alert } from 'react-bootstrap';
 import Results from './Results';
 import * as uptimeCalc from './uptimeCalc';
+import Warning from './Warning';
 
 //Just tries to force the format to be less permisive than parseFloat which is very forgiving.
 const REGEX_FORMAT = /^[0-9]*\.?[0-9]*$/;
 
-//Warning conditional display
-function Warning(warning : string) {
-  return warning ? (<Alert variant="danger">{warning}</Alert>) : ("");
-}
-
 /**
  * React component to render the form and output for downtime calculations
+ * Input of 99.99 to "year | 5 minutes and 10 seconds" table view.
  */
 export default class UptimeForm extends React.Component<any, any, any> {
     constructor(props : any) {
