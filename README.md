@@ -10,7 +10,7 @@ Functionality includes:
 * Convert SLA% to amount of downtime allowable.
 * Downtime to SLA%
 * Conversions for year, month, week, day durations
-* Downtime represented as a ISO9601 duration (ex: PT1H37M) 
+* Downtime represented as a ISO9601 duration (ex: PT1H37M)
 
 ### Deployment
 Currently deploy.sh is simply a script that deploys to my s3 bucket.
