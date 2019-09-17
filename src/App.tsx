@@ -27,14 +27,14 @@ const App: React.FC<{ sla?: number }> = () => {
                 className="App-link"
                 href="https://www.linkedin.com/in/johnsontedm"
                 target="_blank"
-                rel="noopener noreferrer"
-              >Ted Johnson</a> messing around.
+                rel="noopener noreferrer">Ted Johnson</a> messing around.
               </Card.Body>
             </Card>
             <br/>
             <Card>
               <Card.Body>
-                <Card.Text>For those with questions about uptime, ISO 8601, or leet speak please R.T.F.M. in the links below.</Card.Text>
+                <Card.Text><h5>Terminology</h5></Card.Text>
+                <Card.Text>For those with questions about the terminology or standards such as uptime, ISO 8601, or leet speak please R.T.F.M. in the links below.</Card.Text>
                 <Card.Link className="App-link"
                 href="https://en.wikipedia.org/wiki/Uptime"
                 target="_blank"
@@ -51,7 +51,12 @@ const App: React.FC<{ sla?: number }> = () => {
                 href="https://en.wikipedia.org/wiki/ISO_8601"
                 target="_blank"
                 rel="noopener noreferrer">ISO 8601</Card.Link>
-                <Card.Text className="Center-Text"><br/><b>-OR-</b><br/></Card.Text>
+              </Card.Body>
+            </Card>
+            <br/>
+            <Card>
+              <Card.Body>
+                <Card.Text><h5>Project Links</h5></Card.Text>
                 <Card.Link className="App-link" href="https://github.com/TedMN/up71.me" target="_blank">
                   <img alt="Github project link" src="GitHub-Mark-32px.png"/> UP71.ME project
                 </Card.Link>
