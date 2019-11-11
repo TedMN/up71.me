@@ -1,8 +1,11 @@
 import React, { FormEvent } from 'react';
-import { InputGroup, Form, FormControl, Alert } from 'react-bootstrap';
+import { InputGroup, Form, FormControl } from 'react-bootstrap';
 import Results from './Results';
 import * as uptimeCalc from './uptimeCalc';
 import Warning from './Warning';
+import logEntry from './logEntry';
+
+declare var gtag: UniversalAnalytics.ga;
 
 //Just tries to force the format to be less permisive than parseFloat which is very forgiving.
 const REGEX_FORMAT = /^[0-9]*\.?[0-9]*$/;
@@ -22,7 +25,8 @@ export default class UptimeForm extends React.Component<any, any, any> {
         year: '',
         leapYear: '',
         raw: '',
-        warning: ''
+        warning: '',
+        lastTimer: 0
       };
   
       this.handleChange = this.handleChange.bind(this);
@@ -51,6 +55,12 @@ export default class UptimeForm extends React.Component<any, any, any> {
       const message = "A percent for uptime needs to from 0 to 100. ex: 99.95";
 
       this.preventEvent(event);
+
+      if(value.length > 0){ 
+        logEntry('uptime', value, this.state.lastTimer, (i) => { this.setState({ lastTimer: i })}); 
+      } else {
+        clearTimeout(this.state.lastTimer);
+      }
 
       if(!isValid) {
         this.setState({warning: message});

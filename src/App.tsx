@@ -4,7 +4,7 @@ import OutageForm from './OutageForm';
 import './App.css';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 
-const App: React.FC<{ sla?: number }> = () => {
+const App: React.FC<{ uptime?: number, downtime?: string }> = () => {
   return (
     <div className="App">
       <Container fluid={true}>
@@ -33,7 +33,7 @@ const App: React.FC<{ sla?: number }> = () => {
             <br/>
             <Card>
               <Card.Body>
-                <Card.Text><h5>Terminology</h5></Card.Text>
+                <Card.Title>Terminology</Card.Title>
                 <Card.Text>For those with questions about the terminology or standards such as uptime, ISO 8601, or leet speak please R.T.F.M. in the links below.</Card.Text>
                 <Card.Link className="App-link"
                 href="https://en.wikipedia.org/wiki/Uptime"
@@ -48,6 +48,10 @@ const App: React.FC<{ sla?: number }> = () => {
                 target="_blank"
                 rel="noopener noreferrer">RTFM</Card.Link>
                 <Card.Link className="App-link"
+                href="https://en.wikipedia.org/wiki/High_availability"
+                target="_blank"
+                rel="noopener noreferrer">HA</Card.Link>
+                <Card.Link className="App-link"
                 href="https://en.wikipedia.org/wiki/ISO_8601"
                 target="_blank"
                 rel="noopener noreferrer">ISO 8601</Card.Link>
@@ -56,7 +60,7 @@ const App: React.FC<{ sla?: number }> = () => {
             <br/>
             <Card>
               <Card.Body>
-                <Card.Text><h5>Project Links</h5></Card.Text>
+                <Card.Title>Project Links</Card.Title>
                 <Card.Link className="App-link" href="https://github.com/TedMN/up71.me" target="_blank">
                   <img alt="Github project link" src="GitHub-Mark-32px.png"/> UP71.ME project
                 </Card.Link>

@@ -1,16 +1,26 @@
 import React, { FormEvent } from 'react';
 import Moment from 'moment';
-import { InputGroup, Form, FormControl, Alert, Dropdown, DropdownButton } from 'react-bootstrap';
+import { InputGroup, Form, FormControl, Dropdown, DropdownButton } from 'react-bootstrap';
 import Results from './Results';
 import * as uptimeCalc from './uptimeCalc';
 import Warning from './Warning';
+import logEntry from './logEntry';
+
+export enum OutageFormTypeEnum {
+  HOURS,
+  DURATION
+}
+
+export interface OutageFormProps {
+  initialValue?: { value: string, type: OutageFormTypeEnum }
+}
 
 /**
  * React component to render the form and output for outage calculations
  * Input hours or duration and get back SLA %, ex. 99.945
  */
-export default class UptimeForm extends React.Component<any, any, any> {
-  constructor(props: any) {
+export default class OutageForm extends React.Component<OutageFormProps, any, any> {
+  constructor(props: OutageFormProps) {
     super(props);
     
     //This feels like it could be better handled with two subclasses/conditional rendering of two small objects. May refactor when we go multi-lingual.
@@ -48,7 +58,8 @@ export default class UptimeForm extends React.Component<any, any, any> {
       week: '',
       month: '',
       year: '',
-      leapYear: ''
+      leapYear: '',
+      lastTimer: 0
     });
   }
 
@@ -98,7 +109,8 @@ export default class UptimeForm extends React.Component<any, any, any> {
     const duration = Moment.duration(value);
     const isValid = duration.isValid() && duration.asMilliseconds() > 0;
     
-    console.log(duration.toISOString())
+    logEntry('outage', value, this.state.lastTimer, (i) => { this.setState({ lastTimer: i }) });
+
     if (value.length < 3) {
       this.setState({ warning: "" });
       this.clearRanges();
