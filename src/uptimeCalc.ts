@@ -1,5 +1,6 @@
 import Moment from 'moment';
 
+export const MILLISECONDS_IN_A_HOUR = 60 * 60 * 1000;
 export const MILLISECONDS_IN_A_DAY = 86400 * 1000;
 export const MILLISECONDS_IN_A_YEAR = 365 * MILLISECONDS_IN_A_DAY;
 export const MILLISECONDS_IN_A_LEAPYEAR = 366 * MILLISECONDS_IN_A_DAY;
@@ -29,7 +30,7 @@ export function durationReadable(ms : number) : string {
     if(s>0) arr.push(`${s} second${s > 1?'s':''}`);
   
     if(arr.length === 0){
-      if(mills>50){
+      if(mills>10){
         arr.push(`${mills} milliseconds`);
       } else {
         arr.push('~0');
