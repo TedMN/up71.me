@@ -10,11 +10,17 @@ const App: React.FC<{ uptime?: number, downtime?: string }> = () => {
       <Container fluid={true}>
         <Row>
           <Col sm="12" lg="6" md="12" xl="4" className="App-main">
-            <h2>SLA% -&gt; Downtime</h2>
+            <label>
+              <h2>SLA% -&gt; Downtime</h2>
+              <h6>Convert Service Level Agreement to downtime duration.</h6>
+            </label>
             <UptimeForm></UptimeForm>    
           </Col>
           <Col sm="12" lg="6" md="12" xl="5" className="App-main">
-            <h2>Downtime -&gt; SLA%</h2>
+            <label>
+              <h2>Downtime -&gt; SLA%</h2>
+              <h6>Convert downtime duration to Service Level Agreement percent.</h6>
+            </label>
             <OutageForm></OutageForm>
           </Col>
           
