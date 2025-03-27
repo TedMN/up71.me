@@ -1,6 +1,7 @@
 import React from 'react';
 import UptimeForm from './UptimeForm';
 import OutageForm from './OutageForm';
+import CompoundForm from './CompoundForm';
 import './App.css';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 
@@ -23,7 +24,9 @@ const App: React.FC<{ uptime?: number, downtime?: string }> = () => {
             </label>
             <OutageForm></OutageForm>
           </Col>
-          
+          <Col sm="12" lg="6" md="12" xl="4" className="App-main">
+            <CompoundForm /> {/* Add the new compound SLA form here */}
+          </Col>
           <Col lg="12" md="12" xl="3" className="App-notes">
             <h2><b>UP71.ME (uptime)</b></h2>
             <Card>
